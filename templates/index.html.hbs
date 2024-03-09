@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Wilper</title>
+        <link rel="stylesheet" type="text/css" href="public/main.css" />
+    </head>
+    <body>
+        <div id="t_main">
+            <div>
+                <h1>My stuff</h1>
+            </div>
+            <div>
+                <p>Hi, i`m just a passionate student, who wants to get good at programming.</p>
+                <p>This page is a practice project, and i`ll post other projects here too.</p>
+            </div>
+        </div>
+        <div id="posts">
+            <h2>Posts</h2>
+            <div id="post_holder">
+                {{#each posts}}
+                <div id="content">
+                    <p>Title: {{ this.title }}</p>
+                    <p>Body: {{ this.body }}</p>
+                    <p>Id: {{ this.id }}</p>
+                </div>
+                {{else}}
+                <p> No posts yet</p>
+                {{/each}}
+            </div>
+        </div>
+        <div id="contacts">
+            <p>
+                Telegram
+                Mail
+                <a href="https://github.com/Wilper-st"> GitHub </a>
+            </p>
+        </div>
+    </body>
+</html>

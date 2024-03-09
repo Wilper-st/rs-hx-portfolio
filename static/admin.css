@@ -1,0 +1,30 @@
+body {
+  background-color: #2A3132;
+  color: #66A5AD;
+  margin: 0;
+  padding: 0;
+}
+
+#posts {
+  color: #66A5AD;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+#post_holdet {
+  display: flex;
+}
+
+#content {
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #66A5AD;
+  background-color: #66A5AD;
+  color: #2A3132;
+  width: 600px;
+  text-align: center;
+  margin: 30px;
+}

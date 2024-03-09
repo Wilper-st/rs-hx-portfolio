@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Admin console</title>
+        <link rel="stylesheet" type="text/css" href="public/admin.css" />
+  	    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+    </head>
+    <body>
+        <div id="posts">
+            <h2>Posts</h2>
+            <div id="post_holder" hx-get="/delete/{{this.id}}" hx-swap="outerHTML">
+                {{#each posts}}
+                <div id="content">
+                    <p>Title: {{ this.title }}</p>
+                    <p>Body: {{ this.body }}</p>
+                    <p>Id: {{ this.id }}</p>
+                    <button>Delete</button>
+                </div>
+                {{else}}
+                <p> No posts yet</p>
+                {{/each}}
+            </div>
+        </div>
+    </body>
+</html>
