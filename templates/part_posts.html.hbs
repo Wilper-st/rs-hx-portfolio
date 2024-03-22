@@ -1,0 +1,12 @@
+<div id="post_holder">
+    {{#each posts}}
+    <div id="content">
+        <p>Title: {{ this.title }}</p>
+        <p>Body: {{ this.body }}</p>
+        <p>Id: {{ this.id }}</p>
+        <button hx-get="/delete/{{this.id}}" hx-target="#post_holder">Delete</button>
+    </div>
+    {{else}}
+    <p> No posts yet</p>
+    {{/each}}
+</div>

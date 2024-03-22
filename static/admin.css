@@ -14,8 +14,28 @@ body {
   margin-bottom: 40px;
 }
 
+#buttons {
+  background-color: #66A5AD;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+}
+
 #post_holdet {
   display: flex;
+  flex-direction: column;
+}
+
+#create_form {
+  display: flex;
+  flex-direction: column;
+}
+
+#create_form {
+  #submit_button {
+    color: red;
+  }
 }
 
 #content {

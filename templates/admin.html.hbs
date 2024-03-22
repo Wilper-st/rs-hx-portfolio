@@ -8,13 +8,17 @@
     <body>
         <div id="posts">
             <h2>Posts</h2>
-            <div id="post_holder" hx-get="/delete/{{this.id}}" hx-swap="outerHTML">
+            <div id="buttons">
+                <button hx-get="/part_create_layout" hx-target="#post_holder">Create</button>
+                <button hx-get="/part_post_layout" hx-target="#post_holder">Delete</button>
+            </div>
+            <div id="post_holder">
                 {{#each posts}}
                 <div id="content">
                     <p>Title: {{ this.title }}</p>
                     <p>Body: {{ this.body }}</p>
                     <p>Id: {{ this.id }}</p>
-                    <button>Delete</button>
+                    <button hx-get="/delete/{{this.id}}" hx-target="#post_holder">Delete</button>
                 </div>
                 {{else}}
                 <p> No posts yet</p>
