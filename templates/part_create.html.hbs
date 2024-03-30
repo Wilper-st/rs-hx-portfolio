@@ -1,8 +1,8 @@
 <div id="post_holder"> 
-    <form id="create_form" hx-post="/admin/submit">
+    <form id="create_form" hx-post="/admin/submit" hx-target="#resp">
         <input type="text" id="title" name="title" required minlength="4" maxlength="100" size="20" />
-        <textarea id="body" name="body" rows="20" cols="100">
-        </textarea>
+        <textarea id="body" name="body" rows="20" cols="100"></textarea>
         <button id="submit_button">Submit</button>
     </form>
+    <div id="resp"></div>
 </div>

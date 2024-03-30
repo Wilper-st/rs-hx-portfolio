@@ -48,6 +48,12 @@ body {
   }
 }
 
+#resp {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
 #content {
   border-style: solid;
   border-radius: 5px;

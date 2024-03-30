@@ -6,7 +6,6 @@ extern crate diesel;
 use diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use dotenvy::dotenv;
-use diesel::pg::PgConnection;
 use std::env;
 
 use rocket::tokio::time::{sleep, Duration};
@@ -43,7 +42,15 @@ pub fn establish_connection_pg() -> PgConnection {
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
+pub fn get_all_posts() -> Vec<models::Post> {
+    use self::models::Post;
+    let connection = &mut establish_connection_pg();
 
+    let res = self::schema::posts::dsl::posts
+        .load::<Post>(connection)
+        .expect("Error loading posts");
+    res
+} 
 //type Result<T, E = Debug<diesel::result::Error>> = std::result::Result<T, E>;
 
 /*#[post("/post", format="json", data="<post>")]
@@ -68,15 +75,15 @@ fn create_post(post: Json<CreatedPost>) -> Result<Created<Json<CreatedPost>>> {
 
 #[get("/delete/<index>")]
 fn delete_by_id(index:i32) -> Template{
-    use self::schema::repeat::dsl::*;
+    use self::schema::posts::dsl::*;
 
     let connection = &mut establish_connection_pg();
 
-    let _ = diesel::delete(repeat.filter(id.eq(index))).execute(connection);
+    let _ = diesel::delete(posts.filter(id.eq(index))).execute(connection);
 
     use self::models::Post;
     let connection = &mut establish_connection_pg();
-    let results = self::schema::repeat::dsl::repeat
+    let results = self::schema::posts::dsl::posts
         .load::<Post>(connection)
         .expect("Error loading posts");
     Template::render("part_posts", context! {posts: &results, count: results.len()})
@@ -86,27 +93,19 @@ fn delete_by_id(index:i32) -> Template{
 
 #[get("/")]
 fn index() -> Template {
-    use self::models::Post;
-    let connection = &mut establish_connection_pg();
-    let results = self::schema::repeat::dsl::repeat
-        .load::<Post>(connection)
-        .expect("Error loading posts");
+    let results = get_all_posts();
     Template::render("index", context! {posts: &results, count: results.len()})
 }
 
 #[get("/admin")]
 fn admin() -> Template {
-    use self::models::Post;
-    let connection = &mut establish_connection_pg();
-    let results = self::schema::repeat::dsl::repeat
-        .load::<Post>(connection)
-        .expect("Error loading posts");
+    let results = get_all_posts();
     Template::render("admin", context! {posts: &results, count: results.len()})
 }
 
 #[post("/admin/submit", data="<post>")]
 fn submit_post(post: Form<CreateForm>) -> Template {
-    use self::schema::repeat::dsl::*;
+    use self::schema::posts::dsl::*;
     use models::NewPost;
     let mut conn = establish_connection_pg();
 
@@ -122,7 +121,7 @@ fn submit_post(post: Form<CreateForm>) -> Template {
         published: false,
     };
 
-    diesel::insert_into(repeat)
+    diesel::insert_into(posts)
         .values(&new_post)
         .execute(&mut conn)
         .expect("Error saving new post");
@@ -132,21 +131,13 @@ fn submit_post(post: Form<CreateForm>) -> Template {
 
 #[get("/part_post_layout")]
 fn part_post_layout() -> Template {
-    use self::models::Post;
-    let connection = &mut establish_connection_pg();
-    let results = self::schema::repeat::dsl::repeat
-        .load::<Post>(connection)
-        .expect("Error loading posts");
+    let results = get_all_posts();
     Template::render("part_posts", context! {posts: &results, count: results.len()})
 } 
 
 #[get("/part_create_layout")]
 fn part_create_layout() -> Template {
-    use self::models::Post;
-    let connection = &mut establish_connection_pg();
-    let results = self::schema::repeat::dsl::repeat
-        .load::<Post>(connection)
-        .expect("Error loading posts");
+    let results = get_all_posts();
     Template::render("part_create", context! {posts: &results, count: results.len()})
 }
 

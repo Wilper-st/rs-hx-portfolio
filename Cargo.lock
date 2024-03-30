@@ -1470,18 +1470,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
 
 [[package]]
-name = "repeat-portfolio"
-version = "0.1.0"
-dependencies = [
- "diesel",
- "dotenvy",
- "rocket 0.5.0",
- "rocket_contrib",
- "rocket_dyn_templates",
- "serde",
-]
-
-[[package]]
 name = "rocket"
 version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1640,6 +1628,18 @@ dependencies = [
  "time 0.3.34",
  "tokio",
  "uncased",
+]
+
+[[package]]
+name = "rs-hx-portfolio"
+version = "0.1.0"
+dependencies = [
+ "diesel",
+ "dotenvy",
+ "rocket 0.5.0",
+ "rocket_contrib",
+ "rocket_dyn_templates",
+ "serde",
 ]
 
 [[package]]
