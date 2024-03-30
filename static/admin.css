@@ -5,6 +5,16 @@ body {
   padding: 0;
 }
 
+#home_button {
+    position: fixed;
+    margin: 10px;
+    text-align: left;
+}
+
+#button_img {
+  border-radius: 15px;
+}
+
 #posts {
   color: #66A5AD;
   display: flex;

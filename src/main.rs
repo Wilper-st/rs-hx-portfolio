@@ -13,8 +13,8 @@ use rocket::tokio::time::{sleep, Duration};
 use rocket::fs::{FileServer, relative, NamedFile};
 
 use rocket::form::Form;
-use rocket::response::{status::Created, Debug};
-use rocket::serde::{json::Json, Deserialize, Serialize};
+//use rocket::response::{status::Created, Debug};
+use rocket::serde::{/*json::Json*/ Deserialize, Serialize};
 use rocket::{get, launch, post, routes, FromForm};
 
 
@@ -34,6 +34,8 @@ struct CreateForm<'r> {
     body: &'r str,
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 pub fn establish_connection_pg() -> PgConnection {
     dotenv().ok();
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
@@ -42,9 +44,9 @@ pub fn establish_connection_pg() -> PgConnection {
 }
 
 
-type Result<T, E = Debug<diesel::result::Error>> = std::result::Result<T, E>;
+//type Result<T, E = Debug<diesel::result::Error>> = std::result::Result<T, E>;
 
-#[post("/post", format="json", data="<post>")]
+/*#[post("/post", format="json", data="<post>")]
 fn create_post(post: Json<CreatedPost>) -> Result<Created<Json<CreatedPost>>> {
     use self::schema::repeat::dsl::*;
     use models::NewPost;
@@ -62,7 +64,7 @@ fn create_post(post: Json<CreatedPost>) -> Result<Created<Json<CreatedPost>>> {
         .expect("Error saving new post");
 
     Ok(Created::new("/").body(post))
-}
+}*/
 
 #[get("/delete/<index>")]
 fn delete_by_id(index:i32) -> Template{
@@ -79,6 +81,8 @@ fn delete_by_id(index:i32) -> Template{
         .expect("Error loading posts");
     Template::render("part_posts", context! {posts: &results, count: results.len()})
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[get("/")]
 fn index() -> Template {
@@ -168,7 +172,6 @@ fn rocket() -> _ {
         .mount("/", routes![index])
         .mount("/", routes![admin])
         .mount("/", routes![boobs])
-        .mount("/", routes![create_post])
         .mount("/", routes![submit_post])
         .mount("/", routes![delete_by_id])
         .mount("/", routes![part_post_layout])
