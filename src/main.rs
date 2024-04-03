@@ -3,6 +3,8 @@
 extern crate rocket;
 extern crate diesel;
 
+use rocket::mtls::Certificate;
+
 use diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use dotenvy::dotenv;
@@ -97,6 +99,11 @@ fn index() -> Template {
     Template::render("index", context! {posts: &results, count: results.len()})
 }
 
+#[get("/cert")]
+fn mutual(cert: Certificate<'_>) -> String {
+    format!("Hello! Here's what we know: [{}] {}", cert.serial(), cert.subject())
+}
+
 #[get("/admin")]
 fn admin() -> Template {
     let results = get_all_posts();
@@ -161,6 +168,7 @@ async fn delay(seconds: u64) -> String {
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index])
+        .mount("/", routes![mutual])
         .mount("/", routes![admin])
         .mount("/", routes![boobs])
         .mount("/", routes![submit_post])
